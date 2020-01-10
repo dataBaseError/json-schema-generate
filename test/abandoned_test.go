@@ -1,8 +1,8 @@
 package test
 
 import (
+	"github.com/dataBaseError/json-schema-generate/test/abandoned_gen"
 	"testing"
-	"github.com/orus-io/json-schema-generate/test/abandoned_gen"
 )
 
 func TestAbandoned(t *testing.T) {

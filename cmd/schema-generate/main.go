@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	generate "github.com/orus-io/json-schema-generate"
+	generate "github.com/dataBaseError/json-schema-generate"
 )
 
 var (
@@ -35,16 +35,16 @@ func main() {
 	if *i != "" {
 		inputFiles = append(inputFiles, *i)
 	}
-	
+
 	if *path != "" {
 		files, err := ioutil.ReadDir(*path)
-		if err != nil{
+		if err != nil {
 			fmt.Fprintf(os.Stderr, err.Error())
 			os.Exit(1)
 		}
 		inputFiles = append(inputFiles, files...)
 	}
-	
+
 	if len(inputFiles) == 0 {
 		fmt.Fprintln(os.Stderr, "No input JSON Schema files.")
 		flag.Usage()

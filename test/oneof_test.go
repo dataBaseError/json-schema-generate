@@ -3,8 +3,8 @@ package test
 import (
 	"testing"
 
+	oneof "github.com/dataBaseError/json-schema-generate/test/oneof_gen"
 	jsoniter "github.com/json-iterator/go"
-	oneof "github.com/orus-io/json-schema-generate/test/oneof_gen"
 	"github.com/stretchr/testify/assert"
 )
 

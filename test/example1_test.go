@@ -2,8 +2,8 @@ package test
 
 import (
 	"encoding/json"
+	"github.com/dataBaseError/json-schema-generate/test/example1_gen"
 	"testing"
-	"github.com/orus-io/json-schema-generate/test/example1_gen"
 )
 
 func TestExample1(t *testing.T) {
