@@ -42,7 +42,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, err.Error())
 			os.Exit(1)
 		}
-		inputFiles = append(inputFiles, files...)
+		var fileNames []string
+		for _, f := range files {
+			fileNames = append(fileNames, f.Name())
+		}
+		inputFiles = append(inputFiles, fileNames...)
 	}
 
 	if len(inputFiles) == 0 {
