@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	generate "github.com/dataBaseError/json-schema-generate"
 )
