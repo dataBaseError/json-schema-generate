@@ -16,7 +16,7 @@ var (
 	o                     = flag.String("o", "", "The output file for the schema.")
 	p                     = flag.String("p", "main", "The package that the structs are created in.")
 	i                     = flag.String("i", "", "A single file path (used for backwards compatibility).")
-	path                  = flag.String("path", "", "directory that contains files.")
+	path                  = flag.String("path", "", "comma seperate list of directories that contains files.")
 	alwaysAcceptFalseFlag = flag.Bool("alwaysAcceptFalse", false, "Any field will accept decoding 'false' and ignore it")
 	schemaKeyRequiredFlag = flag.Bool("schemaKeyRequired", false, "Allow input files with no $schema key.")
 )
@@ -37,16 +37,21 @@ func main() {
 	}
 
 	if *path != "" {
-		files, err := ioutil.ReadDir(*path)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, err.Error())
-			os.Exit(1)
+		pathItems := strings.Split(*path, ",")
+		for _, pathItem := range pathItems {
+			pathItem = strings.TrimSpace(pathItem)
+			files, err := ioutil.ReadDir(pathItem)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, err.Error())
+				os.Exit(1)
+			}
+
+			var fileNames []string
+			for _, f := range files {
+				fileNames = append(fileNames, pathItem+f.Name())
+			}
+			inputFiles = append(inputFiles, fileNames...)
 		}
-		var fileNames []string
-		for _, f := range files {
-			fileNames = append(fileNames, *path+f.Name())
-		}
-		inputFiles = append(inputFiles, fileNames...)
 	}
 
 	if len(inputFiles) == 0 {
