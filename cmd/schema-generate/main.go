@@ -44,7 +44,7 @@ func main() {
 		}
 		var fileNames []string
 		for _, f := range files {
-			fileNames = append(fileNames, f.Name())
+			fileNames = append(fileNames, *path+f.Name())
 		}
 		inputFiles = append(inputFiles, fileNames...)
 	}
