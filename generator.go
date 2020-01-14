@@ -95,7 +95,7 @@ func (g *Generator) processReference(schema *Schema) (string, error) {
 }
 
 // returns the type refered to by schema after resolving all dependencies
-func (g *Generator) processSchema(schemaName string, schema *Schema) (typ string, err error) {
+func (g *Generator) processSchema(schemaName string, schema *Schema, parentNames ...string) (typ string, err error) {
 	if len(schema.Definitions) > 0 {
 		g.processDefinitions(schema)
 	}
@@ -111,7 +111,7 @@ func (g *Generator) processSchema(schemaName string, schema *Schema) (typ string
 			}
 			switch schemaType {
 			case "object":
-				rv, err := g.processObject(name, schema)
+				rv, err := g.processObject(strings.Join(append(parentNames, schemaName), "_"), schema)
 				if err != nil {
 					return "", err
 				}
@@ -275,7 +275,7 @@ func (g *Generator) processObject(name string, schema *Schema) (typ string, err 
 		fieldName := getGolangName(propKey)
 		// calculate sub-schema name here, may not actually be used depending on type of schema!
 		subSchemaName := g.getSchemaName(fieldName, prop)
-		fieldType, err := g.processSchema(subSchemaName, prop)
+		fieldType, err := g.processSchema(subSchemaName, prop, name)
 		if err != nil {
 			return "", err
 		}
